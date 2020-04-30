@@ -27,14 +27,17 @@ def verify_expectations():
 def add_exception(message=None):
     global failed_conditions
     (file_path, line, function_name) = inspect.stack()[2][1:4]
-    failed_conditions.append('Fail in "{}:{}" {}()\n\tException: {}'.format(file_path, line, function_name, message))
+    failed_conditions.append('Exception: {}\nFail in "{}:{}" {}()\n'.format(message, file_path, line, function_name))
 
 
 def report_exceptions():
     global failed_conditions
     if failed_conditions:
-        report = ['\n\nFailed conditions count: [ {} ]\n'.format(len(failed_conditions))]
+        report = ['Failed conditions count: [ {} ]\n'.format(len(failed_conditions))]
         for index, failure in enumerate(failed_conditions, start=1):
-            report.append('{}. {}'.format(index, failure))
+            if len(failed_conditions) > 1:
+                report.append('{}. {}'.format(index, failure))
+            else:
+                report.append(failure)
         failed_conditions = []
         raise AssertionError('\n'.join(report))

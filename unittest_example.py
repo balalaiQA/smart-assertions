@@ -38,3 +38,7 @@ class UnittestExample(unittest.TestCase):
         for number in range(1, 10):
             soft_assert(number % 2 == 0, '{} is not divisible by 2 without remainder!'.format(number))
         verify_expectations()
+
+    def test_one_condition(self):
+        soft_assert(1 > 3, '1 < 3')
+        verify_expectations()
